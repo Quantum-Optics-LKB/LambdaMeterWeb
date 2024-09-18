@@ -1,5 +1,6 @@
 {
-    "precision": 5,
+    "precision_wave": 6,
+    "precision_freq": 3,
     "port": 8000,
     "channels": [
       { "i": 0, "label": "Shakdag - 1D" },

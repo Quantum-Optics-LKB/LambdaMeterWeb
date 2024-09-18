@@ -44,12 +44,12 @@ def index():
 @app.route('/wave')
 def wave():
     data = get_wavemeter_data()
-    return render_template('index.html', channels=config["channels"], wavelengths=data['wavelengths'], precision=config["precision"])
+    return render_template('index.html', channels=config["channels"], wavelengths=data['wavelengths'], precision=config["precision_wave"])
 
 @app.route('/freq')
 def freq():
     data = get_wavemeter_data()
-    return render_template('index.html', channels=config["channels"], frequencies=data['frequencies'], precision=config["precision"])
+    return render_template('index.html', channels=config["channels"], frequencies=data['frequencies'], precision=config["precision_freq"])
 
 # API route to get all wavelengths
 @app.route('/api/', methods=['GET'])
