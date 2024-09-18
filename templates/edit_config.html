@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Config</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Edit Wavemeter Config</h1>
+    <form id="config-form">
+        <label for="precision">Precision:</label>
+        <input type="number" id="precision" name="precision" min="1" max="10" required>
+        
+        <h2>Channels</h2>
+        <div id="channels-container"></div>
+        
+        <button type="submit">Save Config</button>
+    </form>
+
+    <script src="/static/scripts/jquery-3.6.0.min.js"></script>
+    <script>
+        // Fetch the current config from the server
+        $.getJSON("/api/config", function(data) {
+            $('#precision').val(data.precision);
+
+            // Dynamically generate channel fields
+            data.channels.forEach(function(channel, index) {
+                $('#channels-container').append(`
+                    <div class="channel">
+                        <h3>Channel ${index + 1}</h3>
+                        <label for="label${index}">Label:</label>
+                        <input type="text" id="label${index}" name="label${index}" value="${channel.label || 'Channel ' + (index + 1)}">
+                        
+                        <label for="background${index}">Background Color:</label>
+                        <input type="color" id="background${index}" name="background${index}" value="${channel.background || '#ffffff'}">
+                    </div>
+                `);
+            });
+        });
+
+        // Handle form submission to save the new config
+        $('#config-form').on('submit', function(e) {
+            e.preventDefault();
+            var newConfig = {
+                precision: $('#precision').val(),
+                channels: []
+            };
+            
+            $('#channels-container .channel').each(function(index, element) {
+                var label = $(element).find('input[name="label' + index + '"]').val() || 'Channel ' + (index + 1); // Default label
+                var background = $(element).find('input[name="background' + index + '"]').val() || '#ffffff'; // Default color
+                
+                newConfig.channels.push({
+                    i: index,
+                    label: label,
+                    background: background
+                });
+            });
+
+            // Send the new config to the server
+            $.ajax({
+                url: '/api/config',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(newConfig),
+                success: function(response) {
+                    alert('Config updated successfully!');
+                },
+                error: function(error) {
+                    alert('Failed to update config.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

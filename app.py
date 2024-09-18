@@ -25,6 +25,16 @@ def get_wavemeter_data():
 with open('config.json') as config_file:
     config = json.load(config_file)
 
+# Load the config.json file once when the app starts
+def load_config():
+    with open('config.json') as config_file:
+        return json.load(config_file)
+
+def save_config(config):
+    with open('config.json', 'w') as config_file:
+        json.dump(config, config_file, indent=4)
+
+
 
 # Serve the index.html page
 @app.route('/')
@@ -71,19 +81,32 @@ def get_frequency_channel(channel):
     data = get_wavemeter_data()
     return jsonify(data['frequencies'][channel])
 
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    return jsonify(config)
+
+@app.route('/api/config', methods=['POST'])
+def update_config():
+    new_config = request.json
+    save_config(new_config)
+    global config
+    config = new_config  # Update the global config
+    return jsonify({"message": "Config updated successfully!"})
+
+@app.route('/config')
+def edit_config():
+    return render_template('edit_config.html')
+
+
+config = load_config()
+
+
 # WebSocket handler for real-time updates
 @socketio.on('request_update')
 def handle_request_update():
     wavemeter_data = get_wavemeter_data()
     emit('update_channels', wavemeter_data)
 
-    # channel = json.get('channel', 0)
-    # data_type = json.get('type', 'wavelengths')
-    # data = get_wavemeter_data()
-    # value = data[data_type][channel]
-    # emit('update_data', {'value': value, 'timestamp': time.time()})
-    # wavemeter_data = get_wavemeter_data()
-    # emit('update_channels', wavemeter_data)
 
 if __name__ == '__main__':
     socketio.run(app, port=config["port"], debug=True)
