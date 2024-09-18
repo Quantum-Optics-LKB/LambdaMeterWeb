@@ -47,6 +47,11 @@ html, body {
     display: flex;
     gap: 15px;
   }
+
+  .nav-home {
+    display: flex;
+    gap: 15px;
+  }
   
   .nav-buttons a {
     text-decoration: none;
@@ -58,9 +63,25 @@ html, body {
     font-weight: bold;
     transition: background-color 0.3s ease;
   }
+
+  .nav-home a {
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    background-color: #236590;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-right: 50px;
+  }
   
   .nav-buttons a:hover {
     background-color: #2980b9;
+  }
+
+  .nav-home a:hover {
+    background-color: #124262;
   }
   
   .nav-buttons a.active {
