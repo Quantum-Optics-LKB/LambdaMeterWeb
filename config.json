@@ -3,14 +3,14 @@
     "precision_freq": 3,
     "port": 8000,
     "channels": [
-      { "i": 0, "label": "Shakdag - 1D" },
-      { "i": 1, "label": "Aoraki - Hydro" },
-      { "i": 2, "label": "Kosciusko - Fluide Hydro" },
-      { "i": 3, "label": "Denali", "background": "#300" },
-      { "i": 4, "label": "Empty", "background": "#000" },
-      { "i": 5, "label": "Empty", "background": "#000" },
-      { "i": 6, "label": "Empty", "background": "#300" },
-      { "i": 7, "label": "Lhotse - Cold Lab", "background": "#300" }
+    { "i": 0, "label": "Shakdag - 1D", "background": "#500", "reference_frequency": 384229.18 },
+    { "i": 1, "label": "Aoraki - Hydro", "background": "#300", "reference_frequency": 384227.29 },
+    { "i": 2, "label": "Kosciusko - Fluide Hydro", "background": "#500", "reference_frequency": 384232.37 },
+    { "i": 3, "label": "Denali", "background": "#300", "reference_frequency": 384229.26 },
+    { "i": 4, "label": "Empty", "background": "#000", "reference_frequency": 384230.50 },
+    { "i": 5, "label": "Empty", "background": "#000", "reference_frequency": 384231.00 },
+    { "i": 6, "label": "Empty", "background": "#300", "reference_frequency": 384228.50 },
+    { "i": 7, "label": "Lhotse - Cold Lab", "background": "#300", "reference_frequency": 384227.00 }
     ]
   }
   

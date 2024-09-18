@@ -75,14 +75,17 @@
         var channels = {{ channels }};
         // Set the data variable dynamically
         {% if frequencies %}
-            var data = {{ frequencies }};
             var isWavelengthsPage = false;
+            var isDetuningPage = false;
         {% elif wavelengths %}
-            var data = {{ wavelengths }};
             var isWavelengthsPage = true;
-        {% else %}
-            var data = [];
+            var isDetuningPage = false;
+        {% elif detunings %}
             var isWavelengthsPage = false;
+            var isDetuningPage = true;
+        {% else %}
+            var isWavelengthsPage = false;
+            var isDetuningPage = false;
         {% endif %}
     </script>
 

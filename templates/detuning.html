@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detuning</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Detuning (Relative to Reference Frequency)</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Channel</th>
+                <th>Label</th>
+                <th>Detuning (GHz)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, channel in channels %}
+            <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ channel.label }}</td>
+                <td>{{ detuning[i] | round(precision) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

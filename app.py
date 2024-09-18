@@ -51,6 +51,14 @@ def freq():
     data = get_wavemeter_data()
     return render_template('index.html', channels=config["channels"], frequencies=data['frequencies'], precision=config["precision_freq"])
 
+@app.route('/detuning')
+def detuning():
+    detuning_values = [1]
+
+
+    return render_template('index.html',  channels=config["channels"], detunings=detuning_values,  precision=config["precision_freq"])
+
+
 # API route to get all wavelengths
 @app.route('/api/', methods=['GET'])
 def get_data():
@@ -98,6 +106,7 @@ def edit_config():
     return render_template('edit_config.html')
 
 
+
 config = load_config()
 
 
@@ -105,8 +114,22 @@ config = load_config()
 @socketio.on('request_update')
 def handle_request_update():
     wavemeter_data = get_wavemeter_data()
-    emit('update_channels', wavemeter_data)
+
+    detunings = []
+    for i, channel in enumerate(config["channels"]):
+        reference_frequency = channel["reference_frequency"]
+        detuning = wavemeter_data["frequencies"][i] - reference_frequency
+        detunings.append(detuning)
+    wavemeter_data["detunings"] = detunings
+    
+    emit('update_channels',  wavemeter_data)
 
 
 if __name__ == '__main__':
     socketio.run(app, port=config["port"], debug=True)
+
+
+    for i, channel in enumerate(config["channels"]):
+        reference_frequency = channel["reference_frequency"]
+        detuning = data["frequencies"][i] - reference_frequency
+        detuning_values.append(detuning)
