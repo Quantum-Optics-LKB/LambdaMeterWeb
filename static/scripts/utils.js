@@ -112,3 +112,109 @@ $(document).ready(function () {
     }
   });
 });
+
+// Declare selected as a global variable
+// Declare selected as a global variable
+var selected = null;
+
+function resizeFont() {
+    var w = $(document).width();
+    var maxh;
+    if (selected == null) {
+        maxh = $(".container > div").height();
+    } else {
+        maxh = $(selected).height();
+    }
+    var fontsize = w / (precision + 4);
+    if (fontsize > maxh / 2) {
+        fontsize = maxh / 2;
+    }
+    if (selected != null) {
+        $(".container > div .data").css({
+            "font-size": fontsize + "px",
+            "line-height": "130%",
+        });
+    } else {
+        $(".data").css({
+            "font-size": fontsize + "px",
+            "line-height": "130%",
+        });
+    }
+}
+
+// Function to go full window for the selected channel
+function goFullWindow(channel) {
+    // Hide all other elements (navigation, checkboxes, and other channels)
+    $("nav, .checkbox-buttons, .container > div").hide();
+    
+    // Make the selected channel take up the full browser window
+    $(channel).css({
+        "position": "fixed",
+        "top": "0",
+        "left": "0",
+        "width": "100vw",
+        "height": "100vh",
+        "z-index": "9999", // Make sure it sits on top
+        "display": "flex",
+        "align-items": "center",
+        "justify-content": "center"
+    });
+    resizeFont();
+}
+
+// Function to exit full window
+function exitFullWindow(channel) {
+    // Restore the normal layout
+    $("nav, .checkbox-buttons, .container > div").show();
+    
+    // Reset the styles of the selected channel
+    $(channel).css({
+        "position": "",
+        "top": "",
+        "left": "",
+        "width": "",
+        "height": "",
+        "z-index": "",
+        "display": "",
+        "align-items": "",
+        "justify-content": ""
+    });
+    
+    // Reset the font size and line height for all channels
+    $(".container > div .data").css({
+        "font-size": "",
+        "line-height": ""
+    });
+}
+
+// Toggle full-window mode for the selected channel
+$(".container > div").on("click", function () {
+    if (selected != this) {
+        selected = this;
+        goFullWindow(this);  // Make the selected channel go full window
+    } else {
+        selected = null;
+        exitFullWindow(this);  // Restore all channels
+    }
+    resizeFont();
+});
+
+// Resize font when the window is resized
+$(window).resize(function () {
+    resizeFont();
+});
+
+$(document).ready(function () {
+    // Ensure font size is correct initially
+    resizeFont();
+
+    // Checkbox logic to toggle channel visibility
+    $('input[type="checkbox"]').on('change', function () {
+        var channelId = $(this).data('channel');
+        if ($(this).is(':checked')) {
+            $('#container' + channelId).show();  // Show the channel
+        } else {
+            $('#container' + channelId).hide();  // Hide the channel
+        }
+    });
+});

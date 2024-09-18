@@ -296,3 +296,7 @@ p {
   }
 
 }
+
+.container > div {
+  transition: all 0.3s ease-in-out; /* Smooth transitions when going full-window */
+}
