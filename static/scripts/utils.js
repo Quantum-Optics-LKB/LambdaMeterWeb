@@ -102,20 +102,13 @@ function resetbg(element) {
   }
 }
 
-$(document).ready(function() {
-    $('#channel-select').multiselect({
-        includeSelectAllOption: true,
-        enableFiltering: true,
-        maxHeight: 150,
-        buttonWidth: '150px',
-        nonSelectedText: 'Select Channels',
-        nSelectedText: 'Channels hidden',
-        allSelectedText: 'All channels hidden',
-        templates: {
-            button: '<button type="button" class="multiselect dropdown-toggle btn btn-sm btn-secondary" data-toggle="dropdown"></button>'
-        }
-    });
-
-    // Initialize by showing all channels
-    $('#channel-select').multiselect('refresh');
+$(document).ready(function () {
+  $('input[type="checkbox"]').on("change", function () {
+    var channelId = $(this).data("channel");
+    if ($(this).is(":checked")) {
+      $("#container" + channelId).show(); // Show the channel
+    } else {
+      $("#container" + channelId).hide(); // Hide the channel
+    }
+  });
 });

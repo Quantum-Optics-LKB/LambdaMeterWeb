@@ -48,6 +48,14 @@
         {% endfor %}
     </div>
 
+    <div class="btn-group-toggle" data-toggle="buttons" style="margin-top: 20px; text-align: center;">
+        {% for channel in channels %}
+        <label class="btn btn-secondary active">
+            <input type="checkbox" autocomplete="off" id="toggle-channel{{ channel["i"] }}" data-channel="{{ channel["i"] }}" checked> {{ channel["label"] }}
+        </label>
+        {% endfor %}
+    </div>
+
     <div id="modal">
         <div>
             <h1>Disconnected</h1>
