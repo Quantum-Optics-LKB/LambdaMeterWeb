@@ -105,7 +105,12 @@ def update_config():
 def edit_config():
     return render_template('edit_config.html')
 
-
+@app.route('/api/reload_config', methods=['POST'])
+def reload_config():
+    global config
+    # Reload the configuration from the file
+    config = load_config()
+    return jsonify({"message": "Config reloaded successfully!"}), 200
 
 config = load_config()
 
@@ -121,7 +126,7 @@ def handle_request_update():
         detuning = wavemeter_data["frequencies"][i] - reference_frequency
         detunings.append(detuning)
     wavemeter_data["detunings"] = detunings
-    
+
     emit('update_channels',  wavemeter_data)
 
 

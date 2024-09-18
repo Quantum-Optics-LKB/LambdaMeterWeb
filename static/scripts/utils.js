@@ -218,3 +218,14 @@ $(document).ready(function () {
         }
     });
 });
+
+$('#reload-config-btn').on('click', function() {
+    $.post('/api/reload_config', function(response) {
+        console.log(response);
+        alert(response.message);  // Show success message
+        location.reload();  // Reload the page to apply the new config
+        alert('Config reloaded.');
+    }).fail(function() {
+        alert('Failed to reload the config.');
+    });
+});
