@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavemeter API Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container_home">
+        <h1>Rubidium Wavemeter Interface</h1>
+
+        <div class="buttons">
+            <a href="/wave" class="button">View Wavelengths</a>
+            <a href="/freq" class="button">View Frequencies</a>
+        </div>
+    </div>
+    <div class="container_home">
+        <div class="api-section">
+            <h2>API Endpoints</h2>
+            <p>Here are the available API endpoints to fetch data:</p>
+            <ul>
+                <li>
+                    <strong>Get all wavelengths:</strong> <br>
+                    <code>GET /api/wavelengths</code>
+                </li>
+                <li>
+                    <strong>Get all frequencies:</strong> <br>
+                    <code>GET /api/frequencies</code>
+                </li>
+                <li>
+                    <strong>Get specific wavelength by channel:</strong> <br>
+                    <code>GET /api/wavelengths/&lt;channel_id&gt;</code> <br>
+                    Example: <code>GET /api/wavelengths/4</code>
+                </li>
+                <li>
+                    <strong>Get specific frequency by channel:</strong> <br>
+                    <code>GET /api/frequencies/&lt;channel_id&gt;</code> <br>
+                    Example: <code>GET /api/frequencies/4</code>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
