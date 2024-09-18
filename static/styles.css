@@ -67,18 +67,25 @@ html, body {
     background-color: #28a745;
   }
   
-  /* Container and grid layout */
+/* Responsive grid layout */
+.container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+/* One column layout for small screens */
+@media (max-width: 850px) {
   .container {
-    width: 95%;
-    margin: 0rem auto;
-    padding: 1rem;
-    /* background-color: white; */
-    border-radius: 10px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-    gap: 1rem;
+    width: 100%;
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 0;
   }
+}
   
   .container > div {
     background-color: #f4f7f9;
@@ -91,6 +98,14 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (max-width: 850px) {
+    .container > div {
+      border-radius: 0px;
+      padding: 0.1rem;
+      min-height: 50px;
+    }
   }
 
   .api-section {
@@ -139,10 +154,21 @@ html, body {
   }
   
   .colored .data {
-    font-size: 60px;
+    font-size: 3.2rem;
     font-family: "Roboto Mono", SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  @media (max-width: 1200px) {
+    .colored .data {
+      font-size: 2.35rem;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .colored .data {
+      font-size: 2rem;
+    }
   }
   
   /* Units after data (for nm and GHz) */
@@ -248,4 +274,25 @@ p {
 
 .btn-group-toggle .btn:hover {
   background-color: #2980b9;
+}
+
+@media (max-width: 850px) {
+  .btn-group-toggle{
+    margin: 10px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 850px) {
+  .btn{
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    background-color: #3893d0;
+    width: 35%;
+  }
+
 }
