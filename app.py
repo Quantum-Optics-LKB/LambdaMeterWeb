@@ -1,10 +1,17 @@
 import json
-import random
+import random, math, time
 from flask import Flask, jsonify, render_template, request
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+
+
+
+# Triangular wave function for wavelength[0]
+def triangular_wave(t, amplitude=0.5, period=10):
+    return amplitude * (2 / math.pi) * math.asin(math.sin(2 * math.pi * t / period))
+
 
 # Simulate WavelengthMeter data (replace with actual logic from your WavelengthMeter class)
 def get_wavemeter_data():
@@ -14,6 +21,15 @@ def get_wavemeter_data():
     # Introduce noise to the base data
     wavelengths_with_noise = [base + random.uniform(-0.01, 0.01) for base in base_wavelengths]
     frequencies_with_noise = [base + random.uniform(-0.5, 0.5) for base in base_frequencies]
+
+       # Time-dependent triangular scan on wavelength[0]
+    current_time = time.time()  # Get the current time in seconds
+    amplitude = 0.1  # Define the amplitude of the triangular wave (in nm)
+    period = 20  # Period of the triangular wave (in seconds)
+
+    # Apply the triangular wave to wavelength[0]
+    wavelengths_with_noise[0] = base_wavelengths[0] + triangular_wave(current_time, amplitude, period)
+
 
     return {
         "wavelengths": wavelengths_with_noise,
@@ -57,15 +73,15 @@ def detuning():
 
 @app.route('/graph/freq/<int:channel_id>')
 def graph_freq(channel_id):
-    return render_template('graph_freq.html', channel_id=channel_id)
+    return render_template('graph_freq.html', channel_id=channel_id-1)
 
 @app.route('/graph/wave/<int:channel_id>')
 def graph_wave(channel_id):
-    return render_template('graph_wave.html', channel_id=channel_id)
+    return render_template('graph_wave.html', channel_id=channel_id-1)
 
 @app.route('/graph/detuning/<int:channel_id>')
 def graph_detuning(channel_id):
-    return render_template('graph_detuning.html', channel_id=channel_id)
+    return render_template('graph_detuning.html', channel_id=channel_id-1)
 
 
 # API route to get all wavelengths

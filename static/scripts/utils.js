@@ -229,3 +229,4 @@ $('#reload-config-btn').on('click', function() {
         alert('Failed to reload the config.');
     });
 });
+
