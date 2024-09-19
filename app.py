@@ -2,7 +2,6 @@ import json
 import random
 from flask import Flask, jsonify, render_template, request
 from flask_socketio import SocketIO, emit
-import time
 
 app = Flask(__name__)
 socketio = SocketIO(app)
