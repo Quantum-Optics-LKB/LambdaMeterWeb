@@ -57,8 +57,15 @@ def detuning():
 
 @app.route('/graph/freq/<int:channel_id>')
 def graph_freq(channel_id):
-    data = get_wavemeter_data()
-    return render_template('graph_freq.html', frequencies=data['frequencies'], channel_id=channel_id)
+    return render_template('graph_freq.html', channel_id=channel_id)
+
+@app.route('/graph/wave/<int:channel_id>')
+def graph_wave(channel_id):
+    return render_template('graph_wave.html', channel_id=channel_id)
+
+@app.route('/graph/detuning/<int:channel_id>')
+def graph_detuning(channel_id):
+    return render_template('graph_detuning.html', channel_id=channel_id)
 
 
 # API route to get all wavelengths
@@ -90,6 +97,8 @@ def get_wavelength_channel(channel):
 def get_frequency_channel(channel):
     data = get_wavemeter_data()
     return jsonify(data['frequencies'][channel])
+
+
 
 @app.route('/api/config', methods=['GET'])
 def get_config():

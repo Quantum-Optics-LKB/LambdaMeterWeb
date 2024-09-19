@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Channel {{ channel_id }} Frequency</title>
+    <title>Channel {{ channel_id }} Wavelength</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <script src="/static/scripts/chart.js"></script>
     <script src="/static/scripts/jquery-3.6.0.min.js"></script>
     <script src="/static/scripts/socket.io.min.js"></script>
 </head>
 <body>
-    <h1>Live Frequency - Channel {{ channel_id }}</h1>
-    <canvas id="frequencyChart" width="800" height="400"></canvas>
+    <h1>Live Wavelength - Channel {{ channel_id }}</h1>
+    <canvas id="wavelengthChart" width="800" height="400"></canvas>
 
     <script>
-        var ctx = document.getElementById('frequencyChart').getContext('2d');
-        var frequencyChart = new Chart(ctx, {
+        var ctx = document.getElementById('wavelengthChart').getContext('2d');
+        var wavelengthChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [], // Time values (x-axis)
                 datasets: [{
-                    label: 'Frequency (GHz)',
-                    data: [],  // Frequency values (y-axis)
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    label: 'Wavelength (nm)',
+                    data: [],  // Wavelength values (y-axis)
+                    borderColor: 'rgba(192, 75, 75, 1)',
                     borderWidth: 1,
                     fill: false,
                     pointRadius: 0 // Removes points on the line
@@ -36,18 +36,17 @@
                     y: {
                         title: {
                             display: true,
-                            text: 'Frequency (GHz)' // Keep the y-axis title
+                            text: 'Wavelength (nm)' // Keep the y-axis title
                         }
                     }
                 }
             }
         });
-        
 
         let timeCounter = 0;               // Tracks time
         const MAX_DISPLAY_POINTS = 100;     // Max number of points to display
         let allLabels = [];                 // Stores all time labels
-        let allData = [];                   // Stores all frequency data
+        let allData = [];                   // Stores all wavelength data
 
         var socket = io.connect('http://' + document.domain + ':' + location.port);
 
@@ -61,10 +60,10 @@
 
         // Listen for updates from the server
         socket.on('update_channels', function(data) {
-            var frequencyValue = data.frequencies[channel_id];
+            var wavelengthValue = data.wavelengths[channel_id];
 
-            // Update the chart with the new frequency value
-            updateChart(frequencyValue);
+            // Update the chart with the new wavelength value
+            updateChart(wavelengthValue);
         });
 
         // Function to update the chart with new data
@@ -72,16 +71,16 @@
             timeCounter += 1;  // Increment time counter
 
             allLabels.push(timeCounter);  // Store the time counter
-            allData.push(value);          // Store the frequency value
+            allData.push(value);          // Store the wavelength value
 
             // Only display the last MAX_DISPLAY_POINTS points
             const displayLabels = allLabels.slice(-MAX_DISPLAY_POINTS); 
             const displayData = allData.slice(-MAX_DISPLAY_POINTS);     
 
             // Update the chart's labels and data with the recent points
-            frequencyChart.data.labels = displayLabels;
-            frequencyChart.data.datasets[0].data = displayData;
-            frequencyChart.update();
+            wavelengthChart.data.labels = displayLabels;
+            wavelengthChart.data.datasets[0].data = displayData;
+            wavelengthChart.update();
         }
     </script>
 </body>
