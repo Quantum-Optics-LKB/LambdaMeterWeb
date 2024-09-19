@@ -11,6 +11,7 @@ This project provides an interface for interacting with a High Finesse Wavemeter
 - 🛠️ **Configurable channel names**, background colors, and reference frequencies.
 - ✏️ **Editable configuration** through a web interface.
 - 🔄 **Dynamic reloading** of the configuration without restarting the server.
+- 📊 Live plotting of wavelengths, frequencies, and detuning values.
 
 ---
 
@@ -24,6 +25,7 @@ This project provides an interface for interacting with a High Finesse Wavemeter
   - **`detuning.html`**: (Optional) A page for viewing detuning values with respect to reference frequencies.
   - **`home.html`**: The homepage of the interface, providing navigation and links to the main functionality.
   - **`edit_config.html`**: A page for editing the configuration (channel labels, colors, etc.).
+  - **`graph_wave.html, graph_freq.html, graph_detuning.html`**: Live plots for wavelengths, frequencies, and detuning.
 - **Static Files**:
   - **CSS** and **JS** files for styling and dynamic behavior.
 
@@ -32,6 +34,7 @@ This project provides an interface for interacting with a High Finesse Wavemeter
 - Python 3.x
 - Flask
 - jQuery, D3.js, and Socket.io for the front-end
+- Chart.js (for frontend charting)
 
 ## Installation
 
@@ -94,6 +97,23 @@ The configuration is stored in `config.json` and is structured as follows:
 - **Wave/Freq Pages**: Displays real-time data for each channel.
 - **Detuning Page**: Shows detuning relative to each channel’s reference frequency.
 - **Edit Config Page**: Allows updating channel names, background colors, and reference frequencies.
+
+## Live Graphs for Wavelength, Frequency, and Detuning
+
+- Access the live wavelength graph for a specific channel:
+  ```
+  http://localhost:8000/graph/wave/<channel_id>
+  ```
+
+- Access the live frequency graph for a specific channel:
+  ```
+  http://localhost:8000/graph/freq/<channel_id>
+  ```
+
+- Access the live detuning graph for a specific channel:
+  ```
+  http://localhost:8000/graph/detuning/<channel_id>
+  ```
 
 ## How to Edit Configuration
 
