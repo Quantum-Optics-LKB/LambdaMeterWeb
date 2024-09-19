@@ -71,15 +71,15 @@ def detuning():
     detuning_values = [1]
     return render_template('index.html',  channels=config["channels"], detunings=detuning_values,  precision=config["precision_freq"])
 
-@app.route('/graph/freq/<int:channel_id>')
+@app.route('/freq/graph/<int:channel_id>')
 def graph_freq(channel_id):
     return render_template('graph_freq.html', channel_id=channel_id-1)
 
-@app.route('/graph/wave/<int:channel_id>')
+@app.route('/wave/graph/<int:channel_id>')
 def graph_wave(channel_id):
     return render_template('graph_wave.html', channel_id=channel_id-1)
 
-@app.route('/graph/detuning/<int:channel_id>')
+@app.route('/detuning/graph/<int:channel_id>')
 def graph_detuning(channel_id):
     return render_template('graph_detuning.html', channel_id=channel_id-1)
 
