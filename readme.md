@@ -51,7 +51,7 @@ This project provides an interface for interacting with a High Finesse Wavemeter
 
 3. **Run the Flask app**:
    ```bash
-   flask run
+   pyhton app.py
    ```
 
 4. **Access the application**:
