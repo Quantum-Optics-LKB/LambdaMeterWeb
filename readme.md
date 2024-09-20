@@ -48,8 +48,11 @@ This project provides an interface for interacting with a High Finesse Wavemeter
    Create and activate a Python virtual environment (if needed), then install the required packages.
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
+   source venv/bin/activate 
+   pip install -r requirements.txt 
+   # On Windows: 
+   venv\Scripts\activate
+   pip install -r .\requirements.txt
    ```
 
 3. **Run the Flask app**:
