@@ -73,12 +73,10 @@
     <script src="/static/scripts/jquery-3.6.0.min.js"></script>
     <script src="/static/scripts/d3.v4.min.js"></script>
     <script src="/static/scripts/socket.io.min.js"></script>
-    <!-- Dynamically choose between frequencies or wavelengths -->
     
     <script>
-        var precision = {{ precision }};  // Number of digits from server
+        var precision = {{ precision }};  
         var channels = {{ channels }};
-        // Set the data variable dynamically
         {% if frequencies %}
             var isWavelengthsPage = false;
             var isDetuningPage = false;

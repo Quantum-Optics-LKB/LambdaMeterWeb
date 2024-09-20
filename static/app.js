@@ -1,12 +1,13 @@
 $(document).ready(function () {
   var socket = io.connect("http://" + document.domain + ":" + location.port);
+  var update_time=30 // Update 30 msecond (30Hz)
 
   socket.on("connect", function () {
     console.log("WebSocket connected!");
     $("#modal").hide();
     setInterval(function () {
       socket.emit("request_update");
-    }, 100); // Update every second
+    }, update_time); 
   });
 
   // Listen for real-time updates from the server
@@ -26,7 +27,6 @@ $(document).ready(function () {
       $(`#wl${i}`).text(value);
 
       const configBackground = channels[i].background || null;
-      // If we're displaying wavelengths, apply the background gradient based on the wavelength
       if (isWavelengthsPage) {
         makebg(
           $(`#wl${i}`).parent(),
@@ -53,16 +53,13 @@ $(document).ready(function () {
     $("#modal").hide();
   });
 
-  // Handle channel selection
-  $("#channel-select").change(function () {
-    // Get the selected channels
-    var selectedChannels = $(this).val();
 
+
+  $("#channel-select").change(function () {
+    var selectedChannels = $(this).val();
     // Loop through each channel div
     $(".container > div").each(function () {
-      var channelId = $(this).attr("id").replace("container", ""); // Extract the channel ID from the div ID
-
-      // Show or hide the channel based on whether it is selected
+      var channelId = $(this).attr("id").replace("container", ""); 
       if (selectedChannels.includes(channelId)) {
         $(this).show(); // Show channel if it's selected
       } else {
@@ -70,7 +67,6 @@ $(document).ready(function () {
       }
     });
   });
-
   // Initialize by selecting all channels by default
   $("#channel-select option").prop("selected", true).trigger("change");
 });
