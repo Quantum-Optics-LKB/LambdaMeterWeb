@@ -3,74 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wavemeter API Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Edit Config</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .channel {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-    <div class="container_home">
-        <h1>Rubidium Wavemeter Interface</h1>
+    <form id="config-form">
+        <h1>Edit Wavemeter Config</h1>
+        
+        <label for="precision_wave">Precision for Wavelength:</label>
+        <input type="number" id="precision_wave" name="precision_wave" min="1" max="10" required>
+        
+        <label for="precision_freq">Precision for Frequency:</label>
+        <input type="number" id="precision_freq" name="precision_freq" min="1" max="10" required>
 
-        <div class="buttons">
-            <a href="/wave" class="button">View Wavelengths</a>
-            <a href="/freq" class="button">View Frequencies</a>
-            <button class="button" id="reload-config-btn">Reload Config</button>
-        </div>
-    </div>
+        <label for="port">Port:</label>
+        <input type="number" id="port" name="port" min="1" required>
 
-    <div class="container_home">
-        <div class="api-section">
-        <h2>Graph</h2>
-        <p>You can have live plot using:</p>
-        <ul>
-            <li> For Wavelength:
-               <a href="/wave/graph/1"> <code>/wave/graph/&lt;channel_id&gt;</code> <br></a>
-            </li>
-            <li>
-                For Frequency:
-                <a href="/freq/graph/1"><code>/freq/graph/&lt;channel_id&gt;</code></a>
-            </ul>
-        </div>
-    </div>
+        <h2>Channels</h2>
+        <div id="channels-container"></div>
+        
+        <button type="submit">Save Config</button>
+    </form>
 
-    <div class="container_home">
-        <div class="api-section">
-            <h2>API Endpoints</h2>
-            <p>Here are the available API endpoints to fetch data:</p>
-            <ul>
-                <li>
-                    <strong>Get all wavelengths:</strong> <br>
-                    <code>GET /api/wavelengths</code>
-                </li>
-                <li>
-                    <strong>Get all frequencies:</strong> <br>
-                    <code>GET /api/frequencies</code>
-                </li>
-                <li>
-                    <strong>Get specific wavelength by channel:</strong> <br>
-                    <code>GET /api/wavelengths/&lt;channel_id&gt;</code> <br>
-                    Example: <code>GET /api/wavelengths/4</code>
-                </li>
-                <li>
-                    <strong>Get specific frequency by channel:</strong> <br>
-                    <code>GET /api/frequencies/&lt;channel_id&gt;</code> <br>
-                    Example: <code>GET /api/frequencies/4</code>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-</body>
-<script src="/static/scripts/jquery-3.6.0.min.js"></script>
-<script>
-    // Function to reload the configuration
-    $('#reload-config-btn').on('click', function() {
-        $.post('/api/reload_config', function(response) {
-            alert(response.message);  // Show success message
-            location.reload();  // Reload the page to apply the new config
-        }).fail(function() {
-            alert('Failed to reload the config.');
+    <script src="/static/scripts/jquery-3.6.0.min.js"></script>
+    <script>
+        // Fetch the current config from the server
+        $.getJSON("/api/config", function(data) {
+            $('#precision_wave').val(data.precision_wave);
+            $('#precision_freq').val(data.precision_freq);
+            $('#port').val(data.port);
+
+            // Dynamically generate channel fields
+            data.channels.forEach(function(channel, index) {
+                $('#channels-container').append(`
+                    <div class="channel">
+                        <h3>Channel ${index + 1}</h3>
+                        <label for="label${index}">Label:</label>
+                        <input type="text" id="label${index}" name="label${index}" value="${channel.label || 'Channel ' + (index + 1)}">
+
+                        <label for="reference_frequency${index}">Reference Frequency (GHz):</label>
+                        <input type="number" step="0.01" id="reference_frequency${index}" name="reference_frequency${index}" value="${channel.reference_frequency || 0}">
+                    </div>
+                `);
+            });
         });
-    });
-</script>
+
+        // Handle form submission to save the new config
+        $('#config-form').on('submit', function(e) {
+            e.preventDefault();
+            var newConfig = {
+                precision_wave: $('#precision_wave').val(),
+                precision_freq: $('#precision_freq').val(),
+                port: $('#port').val(),
+                channels: []
+            };
+            
+            $('#channels-container .channel').each(function(index, element) {
+                var label = $(element).find('input[name="label' + index + '"]').val() || 'Channel ' + (index + 1); // Default label
+                var reference_frequency = $(element).find('input[name="reference_frequency' + index + '"]').val() || 0; // Default frequency
+                
+                newConfig.channels.push({
+                    i: index,
+                    label: label,
+                    reference_frequency: parseFloat(reference_frequency)
+                });
+            });
+
+            // Send the new config to the server
+            $.ajax({
+                url: '/api/config',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(newConfig),
+                success: function(response) {
+                    alert('Config updated successfully!');
+                },
+                error: function(error) {
+                    alert('Failed to update config.');
+                }
+            });
+        });
+    </script>
+</body>
 </html>
