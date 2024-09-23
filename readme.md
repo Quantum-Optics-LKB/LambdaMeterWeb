@@ -105,17 +105,17 @@ The configuration is stored in `config.json` and is structured as follows:
 
 - Access the live wavelength graph for a specific channel:
   ```
-  http://localhost:8000/graph/wave/<channel_id>
+  http://localhost:5000/graph/wave/<channel_id>
   ```
 
 - Access the live frequency graph for a specific channel:
   ```
-  http://localhost:8000/graph/freq/<channel_id>
+  http://localhost:5000/graph/freq/<channel_id>
   ```
 
 - Access the live detuning graph for a specific channel:
   ```
-  http://localhost:8000/graph/detuning/<channel_id>
+  http://localhost:5000/graph/detuning/<channel_id>
   ```
 
 ## How to Edit Configuration
@@ -129,6 +129,19 @@ If you manually update `config.json`, you can reload it without restarting the s
 
 1. Click the "Reload Config" button on the homepage, or
 2. Send a `POST` request to `/api/reload_config`.
+
+## Configure your local hostname
+If you want to access it without remembering the IP, you can configure your local hostname to point to the server.
+### Windows
+1. Open the file `C:\Windows\System32\drivers\etc\hosts` in a text editor.
+2. Add the following line at the end of the file:
+   ``` 10.0.2.3 wlm.local ```
+3. Save the file and access the application at `http://wlm.local:5000`.
+### MacOS/Linux
+1. Open the file `/etc/hosts` in a text editor.
+2. Add the following line at the end of the file:
+   ``` 10.0.2.3 wlm.local ```
+3. Save the file and access the application at `http://wlm.local:5000`.
 
 ## License
 
