@@ -5,6 +5,7 @@ Or send Dummy data in debug mode
 
 import argparse
 import ctypes, random, time, math
+import numpy as np
 
 DLL_PATH = "C:\Windows\System32\wlmData.dll"
 
@@ -44,7 +45,7 @@ class WavelengthMeter:
 
     def GetFrequency(self, channel: int=1):
         if not self.debug:
-            return self.dll.GetFrequencyNum(ctypes.c_long(channel), ctypes.c_double(0))
+            return self.dll.GetFrequencyNum(ctypes.c_long(channel), ctypes.c_double(0))*1000
         else:
             return []
 

@@ -1,11 +1,11 @@
 {
     "precision_wave": 6,
-    "precision_freq": 3,
-    "port": 8000,
+    "precision_freq": 6,
+    "port": 5000,
     "channels": [
     { "i": 0, "label": "Shakdag - 1D", "reference_frequency": 384229.18 },
     { "i": 1, "label": "Aoraki - Hydro",  "reference_frequency": 384227.29 },
-    { "i": 2, "label": "Kosciusko - Fluide Hydro",  "reference_frequency": 384232.37 },
+    { "i": 2, "label": "Kosciusko - Fluide Hydro",  "reference_frequency": 377107},
     { "i": 3, "label": "Denali", "background": "#300", "reference_frequency": 384229.26 },
     { "i": 4, "label": "Empty", "background": "#000", "reference_frequency": 384230.50 },
     { "i": 5, "label": "Empty", "background": "#000", "reference_frequency": 384231.00 },

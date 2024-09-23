@@ -7,7 +7,7 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 # Instantiate WavelengthMeter (set debug=True for dummy data)
-wlm = WavelengthMeter(debug=True)  
+wlm = WavelengthMeter(debug=False)  
 
 
 def load_config():
@@ -125,4 +125,4 @@ def handle_request_update():
 
 
 if __name__ == '__main__':
-    socketio.run(app, port=config["port"], debug=False)
+    socketio.run(app, host="0.0.0.0", port=config["port"], debug=False)
