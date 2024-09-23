@@ -5,7 +5,6 @@ Or send Dummy data in debug mode
 
 import argparse
 import ctypes, random, time, math
-import numpy as np
 
 DLL_PATH = "C:\Windows\System32\wlmData.dll"
 
