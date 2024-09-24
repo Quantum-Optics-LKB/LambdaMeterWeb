@@ -11,7 +11,7 @@ This project provides an interface for interacting with a High Finesse Wavemeter
 - 🛠️ **Configurable channel names**, background colors, and reference frequencies.
 - ✏️ **Editable configuration** through a web interface.
 - 🔄 **Dynamic reloading** of the configuration without restarting the server.
-- 📊 Live plotting of wavelengths, frequencies, and detuning values.
+- 📊 **Live plotting** of wavelengths, frequencies, and detuning values.
 
 ---
 
@@ -85,6 +85,8 @@ The configuration is stored in `config.json` and is structured as follows:
 - **port**: The port on which the server runs.
 - **channels**: An array of channel configurations, each with a label, background color, and reference frequency.
 - **background**: The background color for the channel display.
+
+Initially this file is not copied with your git repository, you could duplicate config_default.json to start editing.
 
 ## Main API Endpoints
 
