@@ -2,6 +2,7 @@ import json
 from flask import Flask, jsonify, render_template, request
 from flask_socketio import SocketIO, emit
 from wlm import WavelengthMeter, get_wavemeter_data
+import os
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -107,6 +108,22 @@ def reload_config():
     return jsonify({"message": "Config reloaded successfully!"}), 200
 
 config = load_config()
+
+
+@app.route('/doc')
+def documentation():
+    # Path to the Markdown file
+    md_file_path = os.path.join(os.path.dirname(__file__), 'readme.md')
+    
+    # Read the content of the Markdown file
+    with open(md_file_path, 'r') as file:
+        md_content = file.read()
+    
+    # Convert the Markdown content to HTML
+    html_content = markdown.markdown(md_content)
+    
+    # Pass the HTML content to a template
+    return render_template('documentation.html', content=html_content)
 
 
 # WebSocket handler for real-time updates
