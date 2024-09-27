@@ -119,7 +119,7 @@ Initially this file is not copied with your git repository, you could duplicate 
   ```
   http://localhost:5000/graph/detuning/<channel_id>
   ```
-  CAREFUL!! Here the <channel_id> number is for python, where numerotation starts at 0. So if for instance you are using channel 4 of the wavemeter, you should write: http://localhost:5000/graph/freq/3
+  CAREFUL !!! Here the <channel_id> number is for python, where numerotation starts at 0. So if for instance you are using channel 4 of the wavemeter, you should write: http://localhost:5000/graph/freq/3
 
 ## Python request
 
@@ -128,7 +128,7 @@ To access the information from a python script, for instance here the frequency 
 
 import requests
 
-response = requests.get("http://10.0.2.3:5000/api/freq/3")
+response = requests.get("http://localhost:5000/api/freq/3")
 print(response.json())
 ```
 
